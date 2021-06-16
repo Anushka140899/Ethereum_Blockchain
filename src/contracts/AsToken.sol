@@ -15,4 +15,9 @@ contract AsToken
          totalSupply=_initialSupply;
     }
 
+    function transfer(address, uint256 _value) public view returns (bool) {
+
+         require(balanceOf[msg.sender]>=_value);
+     }
+
 }

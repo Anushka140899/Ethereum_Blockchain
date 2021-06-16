@@ -38,4 +38,24 @@ contract('AsToken', function(accounts) {
             assert.equal(adminBalance.toNumber(), 1000000, 'It allocates the initial supply to the admin');
         });
     });
+
+    it("Transfers the token ownership", function() {
+
+        return AsToken.deployed().then(function(instance) {
+
+            tokenInstance = instance;
+            return tokenInstance.transfer.call(accounts[1], 999999999);
+        }).then(assert.fail).catch(function(error) {
+
+            assert(error.toString().indexOf('revert') >= 0, "Error message must contain revert"); //to_index needs a to string
+
+        });
+
+    });
+
+
+
+
+
+
 })
