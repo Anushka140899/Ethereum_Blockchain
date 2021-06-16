@@ -7,7 +7,7 @@ contract AsToken
    uint256 public totalSupply;
     constructor(uint256 _initialSupply) public
     {
-         balanceOf[msg.sender]=_initialSupply;
+         //balanceOf[msg.sender]=_initialSupply;
          totalSupply=_initialSupply;
     }
 
