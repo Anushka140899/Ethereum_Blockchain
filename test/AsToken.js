@@ -18,6 +18,9 @@ contract('AsToken', function(accounts) {
             return tokenInstance.symbol();
         }).then(function(symbol) {
             assert.equal(symbol, 'AS', 'Has the correct symbol');
+            return tokenInstance.standard();
+        }).then(function(standard) {
+            assert.equal(standard, 'ASToken version v1.0', 'Has the correct standard');
         });
     })
 
