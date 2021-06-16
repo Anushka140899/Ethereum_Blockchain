@@ -15,6 +15,9 @@ contract('AsToken', function(accounts) {
         }).then(function(name) {
 
             assert.equal(name, 'ASToken', 'has the correct name');
+            return tokenInstance.symbol();
+        }).then(function(symbol) {
+            assert.equal(symbol, 'AS', 'Has the correct symbol');
         });
     })
 
