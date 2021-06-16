@@ -6,7 +6,19 @@ var AsToken = artifacts.require("AsToken");
 contract('AsToken', function(accounts) {
     var tokenInstance;
 
-    it('Sets the total supply upon deployment', function() {
+    it('Initializes the contract with correct values', function() {
+
+        return AsToken.deployed().then(function(instance) {
+
+            tokenInstance = instance;
+            return tokenInstance.name();
+        }).then(function(name) {
+
+            assert.equal(name, 'ASToken', 'has the correct name');
+        });
+    })
+
+    it('Allocates the initial supply upon deployment', function() {
 
         return AsToken.deployed().then(function(instance) {
 
