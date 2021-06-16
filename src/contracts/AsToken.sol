@@ -11,6 +11,8 @@ contract AsToken
 
    event Transfer(address indexed _from, address indexed _to, uint256 _value);     //Transfer event to be triggered
 
+   event Approval(address indexed _owner, address indexed _spender, uint256 _value);   //Approvl event
+
     constructor(uint256 _initialSupply) public
     {
          name="ASToken";
@@ -18,7 +20,7 @@ contract AsToken
          totalSupply=_initialSupply;
     }
 
-    function transfer(address _to, uint256 _value) public returns (bool) {
+    function transfer(address _to, uint256 _value) public returns (bool success) {
 
          require(balanceOf[msg.sender]>=_value);         //Checking if the sender's balance is enough
 
@@ -29,5 +31,12 @@ contract AsToken
 
          return true;
      }
+    
+    //Delegated Transfer
 
+    function approve(address _spender, uint256 _value) public returns (bool success)
+    {
+         emit Approval(msg.sender, _spender, _value);
+         return true;
+    }
 }

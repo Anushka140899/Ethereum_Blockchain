@@ -22,7 +22,7 @@ contract('AsToken', function(accounts) {
         }).then(function(standard) {
             assert.equal(standard, 'ASToken version v1.0', 'Has the correct standard');
         });
-    })
+    });
 
     it('Allocates the initial supply upon deployment', function() {
 
@@ -70,12 +70,21 @@ contract('AsToken', function(accounts) {
         }).then(function(success) {
             assert.equal(success, true, "Returns true");
         });
-
     });
 
-
-
-
-
-
+    it("Approves the transfer", function() {
+        return AsToken.deployed().then(function(instance) {
+            tokenInstance = instance;
+            return tokenInstance.approve.call(accounts[1], 100);
+        }).then(function(success) {
+            assert.equal(success, true, "Returns true");
+            return tokenInstance.approve(accounts[1], 100);
+        }).then(function(receipt) {
+            assert.equal(receipt.logs.length, 1, "Triggers one event");
+            assert.equal(receipt.logs[0].event, 'Approval', "Triggers approval event");
+            assert.equal(receipt.logs[0].args._owner, accounts[0], "Owner of the tokens");
+            assert.equal(receipt.logs[0].args._spender, accounts[1], "Spender of the tokens");
+            assert.equal(receipt.logs[0].args._value, 100, "Valueof the tokens");
+        });
+    });
 })
