@@ -6,19 +6,21 @@ contract AsToken
    string public name; 
    string public symbol="AS";
    string public standard="ASToken version v1.0";
+
    mapping(address => uint256) public balanceOf;
-   uint256 public totalSupply;
+   uint256 public totalSupply=1000000000000000000000000; //1 million ether
+   uint8 public decimals=18;  //wei
+
    mapping(address => mapping(address => uint256)) public allowance;
 
    event Transfer(address indexed _from, address indexed _to, uint256 _value);     //Transfer event to be triggered
 
    event Approval(address indexed _owner, address indexed _spender, uint256 _value);   //Approvl event
 
-    constructor(uint256 _initialSupply) public
+    constructor() public
     {
          name="ASToken";
-         balanceOf[msg.sender]=_initialSupply;
-         totalSupply=_initialSupply;
+         balanceOf[msg.sender]=totalSupply;
     }
 
     function transfer(address _to, uint256 _value) public returns (bool success) {
@@ -27,7 +29,7 @@ contract AsToken
 
          balanceOf[msg.sender] -= _value;
          balanceOf[_to] += _value;
-
+ 
          emit Transfer(msg.sender, _to, _value);
 
          return true;
