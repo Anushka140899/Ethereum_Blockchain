@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import Web3 from 'web3';
+import AsToken from '../abis/AsToken.json'
+import EthSwap from '../abis/EthSwap.json'
 import Navbar from './Navbar'
 import {BrowserRouter as Router , Switch, Route} from 'react-router-dom';
 import Account from './Account'
@@ -17,12 +19,32 @@ class App extends Component {
   {
     const web3 = window.web3
     const accounts = await web3.eth.getAccounts()
+    
     this.setState({account : accounts[0]})
     console.log(this.state.account)
 
     const ethBalance = await web3.eth.getBalance(this.state.account)
     this.setState({ethBalance})
     console.log(this.state.ethBalance)
+
+    //Load Token
+    const networkId = await web3.eth.net.getId()
+    const TokenData= AsToken.networks[networkId]
+    if(TokenData)
+    {
+      const token = new web3.eth.Contract(AsToken.abi,TokenData.address)
+      this.setState({ token })
+      let tokenBalance = await token.methods.balanceOf(this.state.account).call()
+      console.log("TokenBalance: " ,tokenBalance.toString())
+      this.setState({ tokenBalance : tokenBalance.toString() })
+    }
+    else
+    {
+      window.alert('Token contract is not deployed on the current network')
+    }
+
+
+   
   }
   async loadWeb3()
   {
@@ -46,14 +68,17 @@ class App extends Component {
     super(props)
     this.state= {
       account : '',
-      ethBalance : '0'
+      token:{},
+      ethBalance : '0',
+      tokenBalance:'0',
+      provider:''
     }
   }
   render() {
     return (
       <>
       <Router>
-       <Navbar account={this.state.account}/>
+       <Navbar/>
        <Switch>
          <Route path='/' exact />
        </Switch>
