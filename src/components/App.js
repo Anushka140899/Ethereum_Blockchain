@@ -105,11 +105,12 @@ class App extends Component {
       <Router>
        <Navbar/>
        <Switch>
-         <Route path='/' exacts/>
+         <Route path='/' exact/>
        </Switch>
        </Router>
        <Account account={this.state.account}></Account>
        {content}
+       
       </div>
     );
   }
