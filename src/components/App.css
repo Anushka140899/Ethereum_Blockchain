@@ -1,1 +1,10 @@
-/* Styles go here */
+.App-decor{
+    text-align:center;
+    background-image: url("https://www.google.com/search?q=ethereum+logo&tbm=isch&source=iu&ictx=1&fir=LOi_5zCWCJKqCM%252Col8jWAwh1xVbMM%252C_&vet=1&usg=AI4_-kTtVKrpIIkysmhiVsva8eNn85qdbQ&sa=X&ved=2ahUKEwiX9ar4u8vxAhUIfSsKHRvnAggQ9QF6BAgGEAE#imgrc=LOi_5zCWCJKqCM");
+    position: fixed;
+    min-width: 100%;
+    min-height: 100%;
+    background-size: cover;
+    background-position: cover;
+
+}

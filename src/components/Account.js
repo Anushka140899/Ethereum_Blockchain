@@ -5,10 +5,10 @@ import { span } from 'prelude-ls'
 
 class Account extends React.Component{
 
-    constructor(props)
-    {
-        super(props)
-    }
+    // constructor(props)
+    // {
+    //     super(props)
+    // }
     render() {
 
         return(

@@ -4,8 +4,11 @@ import Web3 from 'web3';
 import AsToken from '../abis/AsToken.json'
 import EthSwap from '../abis/EthSwap.json'
 import Navbar from './Navbar'
+import Main from './Main'
 import {BrowserRouter as Router , Switch, Route} from 'react-router-dom';
 import Account from './Account'
+
+
 
 
 class App extends Component {
@@ -43,7 +46,18 @@ class App extends Component {
       window.alert('Token contract is not deployed on the current network')
     }
 
+    const EthswapData= EthSwap.networks[networkId]
+    if(EthswapData)
+    {
+      const ethSwap = new web3.eth.Contract(EthSwap.abi,EthswapData.address)
+      this.setState({ ethSwap })
+    }
+    else
+    {
+      window.alert('Token contract is not deployed on the current network')
+    }
 
+    this.setState({ loading:false })
    
   }
   async loadWeb3()
@@ -69,22 +83,34 @@ class App extends Component {
     this.state= {
       account : '',
       token:{},
+      ethSwap:{},
       ethBalance : '0',
       tokenBalance:'0',
-      provider:''
+      provider:'',
+      loading:true
     }
   }
   render() {
+    let content
+    if(this.state.loading)
+    {
+      content=<p id='loader' className='text-center'>Loading.....</p>
+    }
+    else
+    {
+      content=<Main/>
+    }
     return (
-      <>
+      <div>
       <Router>
        <Navbar/>
        <Switch>
-         <Route path='/' exact />
+         <Route path='/' exacts/>
        </Switch>
        </Router>
        <Account account={this.state.account}></Account>
-      </>
+       {content}
+      </div>
     );
   }
 }
